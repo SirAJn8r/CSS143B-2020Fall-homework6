@@ -44,8 +44,30 @@ public class ArrayDictionary implements Dictionary {
     }
 
     @Override
-    public void remove(String key) {
-        // homework
+    public void remove(String key)
+    {
+        int hashedKey = hashFunction(key);
+        KVEntry ptr = entries[hashedKey];
+
+        if(ptr == null)
+            return;
+
+        //if the first one is the key, remove it
+        if(ptr.key.equals(key))
+        {
+            entries[hashedKey] = ptr.next;
+            return;
+        }
+
+        //check all the others until we find it
+        while (ptr.next != null) {
+            if(ptr.next.key.equals(key))
+            {
+                ptr.next = ptr.next.next;
+                return;
+            }
+            ptr = ptr.next;
+        }
     }
 
     @Override
